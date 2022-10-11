@@ -41,7 +41,7 @@ const createProject = (req, res) => {
     criteria: criteria,
   });
 
-  res.status(201).render("targeted page", newProj);
+  res.status(201).json(newProj);
 };
 
 //UPDATE USER
@@ -72,7 +72,7 @@ const updateProject = (req, res) => {
     criteria: criteria,
   });
 
-  res.status(200).render("targeted page", newProj);
+  res.status(200).json(newProj);
 };
 
 //DELETE
@@ -101,7 +101,7 @@ async function findMany(client, res) {
   
     if (result) {
       // res.status(201).render("targeted page", result);
-      res.status(201).send(result);
+      res.status(201).json(result);
       console.log("success");
     } else {
       console.log(`${nameOfList} not found`);

@@ -7,9 +7,9 @@ const client = new MongoClient(uri);
 
 // GET ONE USER
 const getUser = (req, res) => {
-  const { name } = req.body;
-  fineOneByName(client, name, res);
-  console.log(name);
+  const { id } = req.params;
+  fineOneById(client, id, res);
+  console.log(id);
 };
 
 // GET ALL USER
@@ -39,7 +39,7 @@ const createUser = (req, res) => {
     prj: prj,
   });
 
-  res.status(201).render("targeted page", newUser);
+  res.status(201).json(newUser);
 };
 
 //UPDATE USER
@@ -52,7 +52,7 @@ const updateUser = (req, res) => {
   const [{ prj }] = req.body;
 
   // const user = people.find((person) => person.id === Number(id));
-  const user = findOneByName(client, name, res);
+  const user = findOneById(client, id, res);
   if (!user) {
     return res
       .status(404)
@@ -68,13 +68,13 @@ const updateUser = (req, res) => {
     prj: prj,
   });
 
-  res.status(200).render("targeted page", newUser);
+  res.status(200).json(newUser);
 };
 
 //FUNCTIONS
-async function findOneByName(client, nameOfList, res) {
+async function findOneById(client, id, res) {
   const result = await client.db("MyDatabase").collection("User").findOne({
-    name: nameOfList,
+    id: id,
   });
 
   if (result) {
@@ -95,7 +95,7 @@ async function findMany(client, res) {
 
   if (result) {
     // res.status(201).render("targeted page", result);
-    res.status(201).json({ result });
+    res.status(201).json(result);
     console.log("success");
   } else {
     console.log(`${nameOfList} not found`);
