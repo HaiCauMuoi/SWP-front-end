@@ -8,11 +8,12 @@ const {
     updateUser
 } = require('../controllers/user_controller');
 
-router.post('/getUser', getUser)
+router.get('/api/getUser', getUser)
 
-router.get('/getAllUser', getAllUser)
+router.get('/api/getAllUser', getAllUser)
 
-router.post('/createUser', createUser)
+router.post('/api/createUser', createUser)
 
-router.put('/updateUser', updateUser)
+router.put('/api/updateUser', updateUser)
 
+module.exports = router

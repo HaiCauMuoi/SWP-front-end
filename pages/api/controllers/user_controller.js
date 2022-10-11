@@ -14,8 +14,8 @@ const getUser = (req, res) => {
 
 // GET ALL USER
 const getAllUser = (req, res) => {
-    findMany(client, res);
-  };
+  findMany(client, res);
+};
 
 //CREATE USER (ONLY ONE)
 const createUser = (req, res) => {
@@ -87,21 +87,33 @@ async function findOneByName(client, nameOfList, res) {
 }
 
 async function findMany(client, res) {
-    const result = await client.db("MyDatabase").collection("User").find().toArray()
-  
-    if (result) {
-      // res.status(201).render("targeted page", result);
-      res.status(201).send(result);
-      console.log("success");
-    } else {
-      console.log(`${nameOfList} not found`);
-    }
+  const result = await client
+    .db("MyDatabase")
+    .collection("User")
+    .find()
+    .toArray();
+
+  if (result) {
+    // res.status(201).render("targeted page", result);
+    res.status(201).json({ result });
+    console.log("success");
+  } else {
+    console.log(`${nameOfList} not found`);
   }
+}
 
+// module.exports = {
+//   getUser,
+//   getAllUser,
+//   createUser,
+//   updateUser
+// };
 
-module.exports = {
+const user = {
   getUser,
   getAllUser,
   createUser,
-  updateUser
+  updateUser,
 };
+
+module.exports = user;
