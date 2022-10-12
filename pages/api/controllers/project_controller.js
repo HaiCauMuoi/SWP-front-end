@@ -101,9 +101,9 @@ async function findMany(client, res) {
   
     if (result) {
       // res.status(201).render("targeted page", result);
-      res.status(201).json(result);
+      
       console.log("success");
-      return;
+      return res.status(201).json(result);
     } else {
       console.log(`${nameOfList} not found`);
     }
