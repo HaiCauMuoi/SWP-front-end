@@ -7,8 +7,9 @@ const client = new MongoClient(uri);
 
 // GET ONE USER
 const getUser = (req, res) => {
-  const { id } = req.params;
-  fineOneById(client, id, res);
+  // const { id } = req.params;
+  const { query: { id } } = req;
+  findOneById(client, id, res);
   console.log(id);
 };
 
@@ -18,28 +19,29 @@ const getAllUser = (req, res) => {
 };
 
 //CREATE USER (ONLY ONE)
-const createUser = (req, res) => {
+async function createUser(req, res) {
   const { id } = req.body;
   const { name } = req.body;
   const { email } = req.body;
-  const [{ skillset }] = req.body;
+  const { skillset } = req.body;
   const { uni } = req.body;
-  const [{ prj }] = req.body;
+  const { prj } = req.body;
 
-  if (!name || !email) {
-    return res.status(400).json({ success: false, msg: "invalid input" });
-  }
+  // if (!name || !email) {
+  //   return res.status(400).json({ success: false, msg: "invalid input" });
+  // }
 
-  const newUser = client.db("MyDatabase").collection("User").insertOne({
+  const newUser = await client.db("MyDatabase").collection("User").insertOne({
     id: id,
     name: name,
     email: email,
-    skillser: skillset,
+    skillset: skillset,
     uni: uni,
     prj: prj,
   });
 
-  res.status(201).json(newUser);
+  return res.status(201).json(newUser);
+  console.log(newUser);
 };
 
 //UPDATE USER
@@ -63,12 +65,12 @@ const updateUser = (req, res) => {
     id: id,
     name: name,
     email: email,
-    skillser: skillset,
+    skillset: skillset,
     uni: uni,
     prj: prj,
   });
 
-  res.status(200).json(newUser);
+  return res.status(200).json(newUser);
 };
 
 //FUNCTIONS
@@ -79,10 +81,10 @@ async function findOneById(client, id, res) {
 
   if (result) {
     // res.status(201).render("targeted page", result);
-    res.status(201).json(result);
+    return res.status(201).json(result);
     console.log("success");
   } else {
-    console.log(`${nameOfList} not found`);
+    console.log(`not found`);
   }
 }
 
@@ -95,7 +97,7 @@ async function findMany(client, res) {
 
   if (result) {
     // res.status(201).render("targeted page", result);
-    res.status(201).json(result);
+    return res.status(201).json(result);
     console.log("success");
   } else {
     console.log(`${nameOfList} not found`);
