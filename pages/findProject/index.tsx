@@ -6,6 +6,7 @@ import SearchBar from '../../components/SearchBar';
 import { fetchProject } from '../../utils/fetchProject';
 import { GetServerSideProps } from 'next';
 import { Project } from '../../typing';
+import dateFormat from '../../utils/dateFormat';
 
 type Props = {
   projects: Project[];
@@ -25,7 +26,9 @@ const Index = ({ projects }: Props) => {
                 projectName={project.Project_Name}
                 projectCity={project.Project_Location}
                 projectSchool={project.User_University}
-                projectTime={`${project.Post_Date} - ${project.End_Date}`}
+                projectTime={`${dateFormat(project.Post_Date)} - ${dateFormat(
+                  project.End_Date
+                )}`}
                 projectField={project.Project_Field}
                 projectSkills={project.Project_Skill}
                 projectCriteria1="abc"

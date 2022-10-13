@@ -36,12 +36,13 @@ function Postjob() {
   const [uni, setUni] = useState('');
   const [location, setLocation] = useState('');
   const [skill, setSkill] = useState('');
-  const [criteria1, setCriteria1] = useState('');
-  const [criteria2, setCriteria2] = useState('');
-  const [criteria3, setCriteria3] = useState('');
   const [desc, setDesc] = useState('');
 
-  const criteria = [criteria1, criteria2, criteria3];
+  const [jobField, setJobField] = useState([]);
+
+  const addJobField = () => {
+    setJobField([...jobField, selectedField]);
+  };
 
   const dataReturn = {
     name,
@@ -52,13 +53,12 @@ function Postjob() {
     endDate,
     desc,
     skill,
-    criteria,
   };
 
   return (
     <div className="flex justify-center mt-20">
       <div className="flex justify-between w-8/12 h-screen ">
-        <div className="space-y-5 font-semibold text-lg">
+        <div className="space-y-5 font-semibold text-lg xl:w-7/12">
           <div className=" text-4xl ">Create a project</div>
           <div>
             <h1>Your Project Name</h1>
@@ -116,103 +116,79 @@ function Postjob() {
               className="font-normal text-base border border-black rounded-lg h-10 w-full xl:w-11/12 mt-2 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 self-center  xl:col-span-3 focus:shadow-md pl-3"
             />
           </div>
-          <div>
-            <h1>Skills Needed</h1>
-            <input
-              className="font-normal text-base border border-black rounded-lg h-10 w-full xl:w-11/12 mt-2 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 self-center  xl:col-span-3 focus:shadow-md pl-3"
-              type="text"
-              required
-              placeholder='e.g. "React, Excel, Photoshop, etc."'
-              value={skill}
-              onChange={(e) => setSkill(e.target.value)}
-            />
-          </div>
-          <div>
-            <h1>Field Needed </h1>
-
-            <Listbox value={selectedField} onChange={setSelectedField}>
-              <div className="relative bg-gray-100 flex justify-start items-center border border-black rounded-lg h-12 w-full xl:w-11/12 mt-2 ">
-                <Listbox.Button className="relative w-full bg-gray-100 cursor-default rounded-lg  py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                  <span className="block truncate">{selectedField.name}</span>
-                  <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                    <ChevronDownIcon
-                      className="h-5 w-5 text-gray-400"
-                      aria-hidden="true"
-                    />
-                  </span>
-                </Listbox.Button>
-                <Transition
-                  as={Fragment}
-                  leave="transition ease-in duration-100"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-                >
-                  <Listbox.Options className="absolute top-12 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm overflow-x-hidden">
-                    {fields.map((field, fieldIdx) => (
-                      <Listbox.Option
-                        key={fieldIdx}
-                        className={({ active }) =>
-                          `relative cursor-pointer select-none py-2 pl-10 pr-4 flex justify-between hover:scale-105 transition duration-150 ${
-                            active
-                              ? 'bg-amber-100 text-amber-900'
-                              : 'text-gray-900'
-                          }`
-                        }
-                        value={field}
-                      >
-                        {({ selected }) => (
-                          <>
-                            <span
-                              className={`block truncate ${
-                                selected ? 'font-medium' : 'font-normal'
-                              }`}
-                            >
-                              {field.name}
-                            </span>
-                            {selected ? (
-                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                <CheckIcon
-                                  className="h-5 w-5 "
-                                  aria-hidden="true"
-                                />
+          <div className="border border-black">
+            <div>
+              <h1>Field Needed</h1>
+              <Listbox value={selectedField} onChange={setSelectedField}>
+                <div className="relative bg-gray-100 flex justify-start items-center border border-black rounded-lg h-12 w-full xl:w-11/12 mt-2 ">
+                  <Listbox.Button className="relative w-full bg-gray-100 cursor-default rounded-lg  py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                    <span className="block truncate">{selectedField.name}</span>
+                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                      <ChevronDownIcon
+                        className="h-5 w-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </Listbox.Button>
+                  <Transition
+                    as={Fragment}
+                    leave="transition ease-in duration-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="absolute top-12 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm overflow-x-hidden">
+                      {fields.map((field, fieldIdx) => (
+                        <Listbox.Option
+                          key={fieldIdx}
+                          className={({ active }) =>
+                            `relative cursor-pointer select-none py-2 pl-10 pr-4 flex justify-between hover:scale-105 transition duration-150 ${
+                              active
+                                ? 'bg-amber-100 text-amber-900'
+                                : 'text-gray-900'
+                            }`
+                          }
+                          value={field}
+                        >
+                          {({ selected }) => (
+                            <>
+                              <span
+                                className={`block truncate ${
+                                  selected ? 'font-medium' : 'font-normal'
+                                }`}
+                              >
+                                {field.name}
                               </span>
-                            ) : null}
-                          </>
-                        )}
-                      </Listbox.Option>
-                    ))}
-                  </Listbox.Options>
-                </Transition>
-              </div>
-            </Listbox>
+                              {selected ? (
+                                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                                  <CheckIcon
+                                    className="h-5 w-5 "
+                                    aria-hidden="true"
+                                  />
+                                </span>
+                              ) : null}
+                            </>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              </Listbox>
+            </div>
+            <div>
+              <h1>Position Needed</h1>
+              <input
+                className="font-normal text-base border border-black rounded-lg h-10 w-full xl:w-11/12 mt-2 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 self-center  xl:col-span-3 focus:shadow-md pl-3"
+                type="text"
+                required
+                placeholder='e.g. "React, Excel, Photoshop, etc."'
+                value={skill}
+                onChange={(e) => setSkill(e.target.value)}
+              />
+            </div>
+            <button>Add Field</button>
           </div>
-          <div>
-            <h1>Criteria</h1>
-            <input
-              className="font-normal text-base border border-black rounded-lg h-10 w-full xl:w-11/12 mt-2 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 self-center  xl:col-span-3 focus:shadow-md pl-3"
-              type="text"
-              required
-              placeholder='e.g. "Must be a student at UBC, etc."'
-              value={criteria1}
-              onChange={(e) => setCriteria1(e.target.value)}
-            />
-            <input
-              className="font-normal text-base border border-black rounded-lg h-10 w-full xl:w-11/12 mt-2 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 self-center  xl:col-span-3 focus:shadow-md pl-3"
-              type="text"
-              required
-              placeholder='e.g. "Must have a 3.5 GPA, etc."'
-              value={criteria2}
-              onChange={(e) => setCriteria2(e.target.value)}
-            />
-            <input
-              className="font-normal text-base border border-black rounded-lg h-10 w-full xl:w-11/12 mt-2 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 self-center  xl:col-span-3 focus:shadow-md pl-3"
-              type="text"
-              required
-              placeholder='e.g. "Must be positive."'
-              value={criteria3}
-              onChange={(e) => setCriteria3(e.target.value)}
-            />
-          </div>
+          <div></div>
           <div>
             <h1>Project Description </h1>
             <textarea

@@ -10,7 +10,7 @@ export interface Project {
   Project_Id: string;
   Project_Name: string;
   Project_Location: string;
-  Post_Date: string;
+  Post_Date: Date;
   Project_Skill: string;
   Project_Field: string;
   Project_Criteria: ProjectCriteria;
