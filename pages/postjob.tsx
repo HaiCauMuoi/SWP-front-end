@@ -38,17 +38,13 @@ function Postjob() {
   const [skill, setSkill] = useState('');
   const [desc, setDesc] = useState('');
 
-  const [jobField, setJobField] = useState([]);
-
-  const addJobField = () => {
-    setJobField([...jobField, selectedField]);
-  };
+  const jobField = selectedField.name;
 
   const dataReturn = {
     name,
     uni,
     location,
-    selectedField,
+    jobField,
     startDate,
     endDate,
     desc,

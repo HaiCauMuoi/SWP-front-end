@@ -3,8 +3,9 @@ import type { AppProps } from 'next/app';
 import DashboardLayout from '../components/DashboardLayout';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import { SessionProvider } from 'next-auth/react';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps, { session }: any) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -28,9 +29,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     };
   }, [router.events]);
   return (
-    <DashboardLayout>
-      <Component {...pageProps} />
-    </DashboardLayout>
+    <SessionProvider session={session}>
+      <DashboardLayout>
+        <Component {...pageProps} />
+      </DashboardLayout>
+    </SessionProvider>
   );
 }
 

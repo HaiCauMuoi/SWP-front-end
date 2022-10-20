@@ -7,6 +7,7 @@ import { Project } from '../../typing';
 import { GetServerSideProps } from 'next';
 import { fetchProject } from '../../utils/fetchProject';
 import { useRouter } from 'next/router';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 type ProjectFullProps = {
   projects: Project[];
@@ -44,11 +45,11 @@ function ProjectID({ projects }: ProjectFullProps) {
             email="Email Nguoi Dang Project"
             school={project?.User_University}
             city={project?.Project_Location}
-            time={project?.Post_Date}
+            time={'project?.Post_Date'}
             numberOfPeople={project?.Employee_Amount}
             typeOfJob={project?.Project_Field}
           />
-          <JobDescription desc={project?.Post_Date} />
+          <JobDescription desc={'project?.Post_Date'} />
         </div>
       </div>
     </div>

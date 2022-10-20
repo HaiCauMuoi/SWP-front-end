@@ -20,7 +20,7 @@ type DashboardLayoutProps = {
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const router = useRouter();
 
-  const showHeader = router.pathname === '/' ? false : true;
+  const showHeader = router.pathname === '/login' ? false : true;
   return (
     <div>
       {showHeader && <Header />}
