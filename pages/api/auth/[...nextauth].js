@@ -15,10 +15,7 @@ export default NextAuth({
     }),
   ],
   secret: process.env.JWT_SECRET,
-  pages: {
-    signIn: '/login',
-    error: '/login',
-  },
+
   callbacks: {
     session: async (session, user) => {
       // const resUser = await Users.findById(user.sub)
