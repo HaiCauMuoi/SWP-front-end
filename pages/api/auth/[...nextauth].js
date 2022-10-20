@@ -15,9 +15,16 @@ export default NextAuth({
     }),
   ],
   secret: process.env.JWT_SECRET,
+  pages: {
+    signIn: '/login',
+    error: '/login',
+  },
   callbacks: {
-    session({ session, token, user }) {
-      return session; // The return type will match the one returned in `useSession()`
+    session: async (session, user) => {
+      // const resUser = await Users.findById(user.sub)
+      // session.emailVerified = resUser.emailVerified
+      session.userId = user.sub;
+      return Promise.resolve(session);
     },
   },
 });
