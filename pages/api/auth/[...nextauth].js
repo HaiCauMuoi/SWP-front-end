@@ -15,13 +15,9 @@ export default NextAuth({
     }),
   ],
   secret: process.env.JWT_SECRET,
-
   callbacks: {
-    session: async (session, user) => {
-      // const resUser = await Users.findById(user.sub)
-      // session.emailVerified = resUser.emailVerified
-      session.userId = user.sub;
-      return Promise.resolve(session);
+    session({ session, token, user }) {
+      return session;
     },
   },
 });
