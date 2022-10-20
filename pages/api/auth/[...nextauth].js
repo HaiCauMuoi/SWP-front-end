@@ -6,12 +6,13 @@ import NextAuth from 'next-auth';
 export default NextAuth({
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId:
+        '613985939864-bt936qssa8urngi01k8rtl59mok3j31d.apps.googleusercontent.com',
+      clientSecret: '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',
     }),
     GitHubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+      clientId: dedf1ff2d1af38734846,
+      clientSecret: a1006269a2a31cc684ae66956429bf15e2877900,
     }),
     // FacebookProvider({
     //   clientId: process.env.FACEBOOK_CLIENT_ID,
