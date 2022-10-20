@@ -8,6 +8,7 @@ import router from 'next/router';
 
 function Login() {
   const { data: session, status } = useSession();
+  console.log(session);
 
   if (status === 'authenticated') {
     router.push('/');
